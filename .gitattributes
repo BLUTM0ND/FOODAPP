@@ -1,0 +1,13 @@
+# Especificar lenguajes para archivos
+*.php linguist-language=PHP
+*.css linguist-language=CSS
+*.js linguist-language=JavaScript
+*.sql linguist-language=SQL
+*.md linguist-language=Markdown
+
+# Excluir archivos del análisis de lenguajes
+INFORME_PRESENTACION_FOODAPP.md linguist-generated=true
+.gitignore linguist-generated=true
+*.png linguist-generated=true
+*.jpg linguist-generated=true
+*.jpeg linguist-generated=true

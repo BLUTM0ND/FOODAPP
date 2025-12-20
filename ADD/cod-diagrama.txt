@@ -1,0 +1,254 @@
+@startuml Diagrama de Clases - Aplicativo de Comidas ACTUALIZADO
+
+skinparam backgroundColor #FEFEFE
+skinparam classBackgroundColor #LightBlue
+skinparam packageBackgroundColor #White
+skinparam linetype ortho
+
+title Diagrama de Clases - Aplicativo de Pedidos de Comida (Actualizado con RF/RNF)
+
+' Enums en la parte superior
+enum EstadoPedido {
+    PENDIENTE
+    CONFIRMADO
+    PREPARANDO
+    EN_CAMINO
+    ENTREGADO
+    CANCELADO
+}
+
+enum EstadoRestaurante {
+    ABIERTO
+    CERRADO
+    OCUPADO
+}
+
+enum EstadoPago {
+    PENDIENTE
+    PROCESANDO
+    COMPLETADO
+    FALLIDO
+}
+
+enum TipoPago {
+    TARJETA
+    EFECTIVO
+    BILLETERA_DIGITAL
+}
+
+' Jerarquía de actores - lado izquierdo
+class ActorSistema {
+    # id: Integer
+    # fechaCreacion: Date
+    + obtenerInformacion(): void
+}
+
+class Usuario {
+    - email: String
+    - contraseña: String
+    - telefono: String
+    - fechaRegistro: Date
+    + iniciarSesion(): Boolean
+    + cerrarSesion(): void
+    + actualizarPerfil(): void
+    + recuperarContraseña(): void
+}
+
+class Cliente {
+    - direcciones: List<Direccion>
+    - historialPedidos: List<Pedido>
+    + agregarDireccion(): void
+    + realizarPedido(): Pedido
+    + consultarHistorial(): List<Pedido>
+    + calificarRestaurante(): void
+}
+
+class Repartidor {
+    - vehiculo: String
+    - licencia: String
+    - zona: String
+    - disponible: Boolean
+    + aceptarPedido(): void
+    + actualizarUbicacion(): void
+    + completarEntrega(): void
+}
+
+' Visitante - lado derecho superior
+class Visitante {
+    - sessionId: String
+    - carrito: List<DetallePedido>
+    - ubicacionGPS: String
+    - busquedaYFiltros: BusquedaYFiltros
+    + navegarRestaurantes(): void
+    + verProductos(): void
+    + agregarAlCarrito(): void
+    + aplicarFiltros(): List<Restaurante>
+    + procederAlPago(): Usuario
+}
+
+' Restaurante - lado derecho centro
+class Restaurante {
+    - nombreComercial: String
+    - ruc: String
+    - direccion: String
+    - tiempoEntrega: Integer
+    - calificacion: Float
+    - estado: EstadoRestaurante
+    - ubicacionGPS: String
+    - productos: List<Producto>
+    - servicioMapas: IServicioMapas
+    + actualizarMenu(): void
+    + procesarPedido(): void
+    + cambiarEstado(): void
+    + gestionarPedidos(): void
+}
+
+' Clases centrales del negocio
+class Pedido {
+    - id: Integer
+    - fechaPedido: Date
+    - estado: EstadoPedido
+    - total: Float
+    - tiempoEstimado: Integer
+    - metodoPago: TipoPago
+    - propina: Float
+    - descuento: Float
+    + calcularTotal(): Float
+    + actualizarEstado(): void
+    + confirmarEntrega(): void
+    + rastrearPedido(): EstadoPedido
+}
+
+class DetallePedido {
+    - cantidad: Integer
+    - precio: Float
+    - observaciones: String
+    - opcionesPersonalizables: List<String>
+    + calcularSubtotal(): Float
+}
+
+class Producto {
+    - id: Integer
+    - nombre: String
+    - descripcion: String
+    - precio: Float
+    - categoria: String
+    - disponible: Boolean
+    - imagen: String
+    - opcionesDieteticas: List<String>
+    + actualizarPrecio(): void
+    + cambiarDisponibilidad(): void
+}
+
+' Clases de soporte - parte inferior
+class Direccion {
+    - id: Integer
+    - calle: String
+    - numero: String
+    - ciudad: String
+    - referencia: String
+    - predeterminada: Boolean
+    - coordenadasGPS: String
+    + validarDireccion(): Boolean
+}
+
+class Pago {
+    - id: Integer
+    - monto: Float
+    - fecha: Date
+    - estado: EstadoPago
+    - tipoTarjeta: String
+    - datosEncriptados: String
+    + procesarPago(): Boolean
+    + confirmarPago(): void
+}
+
+' NUEVAS CLASES PARA RF ADICIONALES
+class Valoracion {
+    - id: Integer
+    - calificacionRestaurante: Integer
+    - calificacionPedido: Integer
+    - comentario: String
+    - fechaValoracion: Date
+    + guardarValoracion(): void
+}
+
+class BusquedaYFiltros {
+    - terminoBusqueda: String
+    - filtros: Map<String, Object>
+    + buscarRestaurantes(): List<Restaurante>
+    + buscarProductos(): List<Producto>
+    + aplicarFiltros(): List<Object>
+}
+
+' Interfaces para integración externa (RF10)
+interface IServicioMapas {
+    + obtenerUbicacion(): String
+    + calcularDistancia(): Float
+    + mostrarRuta(): void
+}
+
+interface IServicioPagos {
+    + procesarTransaccion(): Boolean
+    + validarPago(): Boolean
+    + reembolsar(): Boolean
+}
+
+interface IServicioMensajeria {
+    + enviarNotificacion(): void
+    + enviarSMS(): void
+    + enviarEmail(): void
+}
+
+interface IProcesoPago {
+    + procesarTransaccion(): Boolean
+    + validarDatos(): Boolean
+}
+
+' RELACIONES UML ACTUALIZADAS:
+
+' 1. HERENCIA
+ActorSistema <|-- Usuario
+ActorSistema <|-- Visitante
+ActorSistema <|-- Restaurante
+
+Usuario <|-- Cliente
+Usuario <|-- Repartidor
+
+' 2. TRANSICIÓN CRÍTICA
+Visitante ..> Cliente : "<<become>>"
+
+' 3. ASOCIACIÓN
+Cliente --> Pedido : "realiza"
+Restaurante --> Pedido : "recibe"
+Repartidor --> Pedido : "entrega"
+Visitante --> Producto : "navega"
+Cliente --> Valoracion : "crea"
+Pedido --> Valoracion : "tiene"
+Visitante --> BusquedaYFiltros : "usa"
+
+' 4. AGREGACIÓN
+Pedido o--> DetallePedido : "contiene"
+DetallePedido o--> Producto : "incluye"
+Visitante o--> DetallePedido : "carrito temporal"
+
+' 5. COMPOSICIÓN
+Cliente *--> Direccion : "posee"
+Restaurante *--> Producto : "ofrece"
+Pedido *--> Pago : "procesa"
+
+' 6. ASOCIACIÓN DIRIGIDA
+Pedido --> Direccion : "entrega en"
+Restaurante --> IServicioMapas : "usa"
+Pago --> IServicioPagos : "integra"
+Sistema --> IServicioMensajeria : "notifica"
+
+' 7. ASOCIACIÓN (enums)
+Pedido --> EstadoPedido : "tiene estado"
+Restaurante --> EstadoRestaurante : "tiene estado"
+Pago --> EstadoPago : "tiene estado"
+
+' 8. REALIZACIÓN
+Pago ..|> IProcesoPago : "implementa"
+
+@enduml

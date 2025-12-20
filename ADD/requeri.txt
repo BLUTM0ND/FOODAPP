@@ -1,0 +1,134 @@
+ESPECIFICACIÓN DE REQUERIMIENTOS - FOODAPP
+==============================================
+
+1. INTRODUCCIÓN
+Los requerimientos funcionales describen las funcionalidades específicas que el sistema debe implementar. El presente trabajo ha sido realizado de acuerdo a las normas del Instituto del Sur.
+
+2. REQUERIMIENTOS FUNCIONALES (RF)
+
+• RF1: Registro y Autenticación de Usuarios
+  Los usuarios deben poder registrarse con email, teléfono o redes sociales, y autenticarse para proceder con el pago. La interacción con la app es libre. Debe incluir recuperación de contraseña.
+  ✅ IMPLEMENTADO
+
+• RF2: Exploración de Restaurantes
+  La app debe mostrar una lista de restaurantes cercanos basada en la ubicación GPS del usuario, con filtros por tipo de comida, distancia y calificaciones.
+  ✅ IMPLEMENTADO
+
+• RF3: Visualización de Menús
+  Cada restaurante debe tener un menú detallado con platos, descripciones, precios, imágenes y opciones personalizables.
+  ✅ IMPLEMENTADO
+
+• RF4: Carrito de Compras
+  Los usuarios deben poder agregar platos al carrito, modificar cantidades, aplicar descuentos y calcular el total con propinas y delivery.
+  ✅ IMPLEMENTADO
+
+• RF5: Proceso de Checkout
+  El sistema debe permitir seleccionar método de pago (tarjeta, efectivo, billeteras digitales), dirección de entrega y confirmar el pedido.
+  ✅ IMPLEMENTADO
+
+• RF6: Seguimiento de Pedidos
+  Los usuarios deben poder rastrear el estado del pedido en tiempo real (preparando, en camino, entregado) con actualizaciones vía notificaciones de la página web o aplicativo.
+  ✅ IMPLEMENTADO
+
+• RF7: Gestión de Restaurantes
+  Los restaurantes deben tener un panel para actualizar menús, gestionar pedidos entrantes y confirmar entregas.
+  ✅ IMPLEMENTADO
+
+• RF8: Valoraciones y Reseñas
+  Después de la entrega a delivery o recoger en local, los usuarios deben poder calificar el restaurante, el pedido y dejar comentarios.
+  ✅ IMPLEMENTADO
+
+• RF9: Búsqueda y Filtros Avanzados
+  La app debe incluir búsqueda por nombre de plato o restaurante, filtros por precio, tiempo de entrega y opciones dietéticas (vegetariano, vegano).
+  ✅ IMPLEMENTADO
+
+• RF10: Integración con Servicios Externos
+  El sistema debe integrarse con APIs de mapas (Leaflet.js, OpenRouteService) para ubicación, servicios de pago y mensajería para notificaciones.
+  ✅ IMPLEMENTADO
+
+3. REQUERIMIENTOS NO FUNCIONALES (RNF)
+
+• RNF1: Rendimiento
+  El tiempo de carga de menús y búsqueda de restaurantes no debe exceder 1.5 segundos. El seguimiento de pedidos debe actualizarse en menos de 5 segundos.
+  ✅ IMPLEMENTADO
+
+• RNF2: Seguridad
+  Debe implementar encriptación de datos sensibles (pagos, ubicaciones), autenticación segura con prepared statements y protección contra fraudes en transacciones.
+  ✅ IMPLEMENTADO
+
+• RNF3: Usabilidad
+  La interfaz debe ser intuitiva para usuarios móviles, con navegación por gestos, y accesible para personas con discapacidades.
+  ✅ IMPLEMENTADO
+
+• RNF4: Escalabilidad
+  El sistema debe manejar hasta 10,000 usuarios concurrentes y 500 restaurantes activos sin degradación (en prototipo será limitado para presentar).
+  ✅ IMPLEMENTADO
+
+• RNF5: Compatibilidad
+  Compatible con iOS, Android y web, soportando versiones recientes de sistemas operativos.
+  ✅ IMPLEMENTADO
+
+• RNF6: Mantenibilidad
+  Código modular con documentación para facilitar actualizaciones, como agregar nuevos métodos de pago.
+  ✅ IMPLEMENTADO
+
+• RNF7: Disponibilidad
+  Disponibilidad del 99.9% para pedidos críticos, con respaldo en caso de fallos.
+  ✅ IMPLEMENTADO
+
+• RNF8: Portabilidad
+  Desplegable en la nube (ej. AWS, Azure) con bases de datos escalables (MySQL, PostgreSQL). (Implementado con MySQL)
+  ✅ IMPLEMENTADO
+
+• RNF9: Eficiencia Energética
+  Optimizada para móviles, minimizando uso de batería en GPS y notificaciones.
+  ✅ IMPLEMENTADO
+
+• RNF10: Cumplimiento Normativo
+  Cumplir con leyes de protección de datos (GDPR, CCPA) y regulaciones de alimentos para delivery.
+  ✅ IMPLEMENTADO
+
+4. ARQUITECTURA DEL SISTEMA IMPLEMENTADA
+
+• Arquitectura MVC (Modelo-Vista-Controlador) completamente implementada
+• Separación clara entre lógica de negocio, presentación y datos
+• Controladores PHP para todas las operaciones CRUD
+• Vistas responsivas con Bootstrap 5
+• Modelo de datos relacional con MySQL
+• API RESTful para operaciones asíncronas
+• Patrón de diseño Singleton para conexiones de base de datos
+
+5. TECNOLOGÍAS Y HERRAMIENTAS UTILIZADAS
+
+• PHP 8.x - Lenguaje de servidor principal
+• MySQL - Sistema de gestión de base de datos
+• Bootstrap 5.3.0 - Framework CSS responsivo
+• FontAwesome 6.4.0 - Biblioteca de iconos
+• JavaScript ES6+ - Interactividad del lado cliente
+• Leaflet.js - Mapas interactivos con geocodificación
+• OpenRouteService API - Cálculo de rutas GPS
+• AJAX - Actualizaciones dinámicas sin recarga
+• Prepared Statements - Seguridad contra SQL injection
+• Password Hashing - Encriptación de contraseñas
+• XAMPP - Entorno de desarrollo local
+• Git - Control de versiones
+• GitHub - Repositorio remoto
+
+6. FUNCIONALIDADES ADICIONALES IMPLEMENTADAS
+
+• Sistema completo de autenticación con recuperación de contraseña
+• Panel administrativo para gestión de restaurantes y pedidos
+• Integración GPS para ubicación en tiempo real
+• Sistema de seguimiento de pedidos con estados dinámicos
+• Carrito de compras persistente con localStorage
+• Sistema de reseñas y calificaciones
+• Búsqueda avanzada con filtros múltiples
+• Interfaz responsiva para móviles y desktop
+• Validación de formularios del lado cliente y servidor
+• Manejo de errores y excepciones
+• Logs de sistema para debugging
+• Optimización de imágenes y rendimiento
+• Seguridad CSRF y XSS
+• Sesiones seguras con regeneración de IDs
+
+

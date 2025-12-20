@@ -1,0 +1,21 @@
+# Archivos locales - no subir al repositorio
+INFORME_PRESENTACION_FOODAPP.md
+
+# Archivos temporales
+*.tmp
+*.temp
+*.log
+
+# Directorios de IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Backups
+*.bak
+*.backup
